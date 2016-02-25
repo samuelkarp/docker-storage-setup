@@ -71,6 +71,11 @@ CHUNK_SIZE:
       Controls the chunk size/block size of thin pool. Value of CHUNK_SIZE
       be suitable to be passed to --chunk-size option of lvconvert.
 
+LV_ERROR_WHEN_FULL
+      Controls the LV behavior when full. Default behavior is controlled by
+      lvm.conf. Setting LV_ERROR_WHEN_FULL=yes forces the LV to error when
+      writes are attempted rather than queuing.
+
 The options below should be specified as values acceptable to 'lvextend -L':
 
 ROOT_SIZE: The size to which the root filesystem should be grown.

@@ -303,6 +303,12 @@ create_lvm_thin_pool () {
   lvconvert -y --zero n $CHUNK_SIZE_ARG --thinpool $VG/$DATA_LV_NAME --poolmetadata $VG/$META_LV_NAME
 }
 
+configure_lvm_thin_pool() {
+  if [[ "${LV_ERROR_WHEN_FULL}" == "yes" ]]; then
+    lvchange --errorwhenfull y "${VG}/${DATA_LV_NAME}"
+  fi
+}
+
 setup_lvm_thin_pool () {
   # At this point of time, a volume group should exist for lvm thin pool
   # operations to succeed. Make that check and fail if that's not the case.
@@ -312,6 +318,7 @@ setup_lvm_thin_pool () {
 
   if ! lvm_pool_exists; then
     create_lvm_thin_pool
+    configure_lvm_thin_pool
     write_storage_config_file
   fi
 
